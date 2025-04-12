@@ -29,16 +29,16 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Text('کد بانو',
                     style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        fontFamily: 'Shabnam Thin')),
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                    )),
                 Text('!تجربه خوشمزه گی با کد بانو ',
                     style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        )),
+                      color: Colors.grey,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    )),
               ],
             ),
           ),
@@ -51,9 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.symmetric(vertical: 70, horizontal: 8),
           child: ListView(
             children: [
-              NewListTileWidget(icon: Icons.home, text: 'Home', onTap: '/'),
               NewListTileWidget(
-                  icon: Icons.person, text: 'Profile', onTap: '/profile'),
+                  icon: Icons.home, text: 'Home', onTap: '/'),
+              NewListTileWidget(
+                  icon: Icons.favorite, text: 'Favorites', onTap: '/favorite'),
               NewListTileWidget(
                   icon: Icons.settings, text: 'Settings', onTap: '/settings'),
             ],
@@ -62,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
-          // Search Bar
+          // creating a  Search Bar
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
             child: Card(
@@ -94,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisSpacing: 4,
                   // the vertical space btw cards
                   childAspectRatio:
-                      0.8, // th ratio of width and height of the child in grid/card
+                  0.8, // th ratio of width and height of the child in grid/card
                 ),
                 itemCount: myDatabase.foodCards[_selectedCatagory].length,
                 itemBuilder: (context, index) => FoodCard(
@@ -103,54 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           // Category Cards
-          Container(
-            height: 65,
-            decoration: BoxDecoration(color: kBottomContainerColor),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(myDatabase.foodCategories.length,
-                  (SelectedContainer) {
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectedCatagory = SelectedContainer;
-                    });
-                  },
-                  child: AnimatedContainer(
-                    duration: Duration(milliseconds: 100),
-                    // Adjust width for 'همه'
-                    width: SelectedContainer == 1 ? 70 : 100,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: _selectedCatagory == SelectedContainer
-                          ? kBottomContainerColor
-                          : Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: _selectedCatagory == SelectedContainer
-                              ? Colors.black.withOpacity(0.2)
-                              : Colors.transparent,
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                        ),
-                      ],
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      myDatabase.foodCategories[SelectedContainer],
-                      style: TextStyle(
-                          color: _selectedCatagory == SelectedContainer
-                              ? kBackgroundColor
-                              : kContainerTextColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                );
-              }),
-            ),
-          ),
+
         ],
       ),
     );
