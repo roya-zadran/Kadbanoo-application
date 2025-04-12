@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kadbanoo/screens/homeScreen.dart';
-import 'package:kadbanoo/screens/profileScreen.dart';
-import 'package:kadbanoo/screens/settingScreen.dart';
-import 'package:kadbanoo/screens/splashScreen.dart';
-import 'package:kadbanoo/createdWidgets/foodItemClass.dart';
-
+import 'screens/homeScreen.dart';
 void main() {
   runApp(KadbanooApp());
 }
@@ -21,9 +16,6 @@ class KadbanooApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => HomeScreen(),
-        '/profile': (context) => ProfileScreen(),
-        '/settings': (context) => SettingScreen(),
-
 
       },
       initialRoute: '/',
