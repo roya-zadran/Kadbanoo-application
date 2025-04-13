@@ -104,7 +104,54 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           // Category Cards
-
+          Container(
+            height: 65,
+            decoration: BoxDecoration(color: kBottomContainerColor),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: List.generate(myDatabase.foodCategories.length,
+                      (SelectedContainer) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedCatagory = SelectedContainer;
+                        });
+                      },
+                      child: AnimatedContainer(
+                        duration: Duration(milliseconds: 100),
+                        // Adjust width for 'همه'
+                        width: SelectedContainer == 1 ? 70 : 100,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: _selectedCatagory == SelectedContainer
+                              ? kBottomContainerColor
+                              : Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: _selectedCatagory == SelectedContainer
+                                  ? Colors.black.withOpacity(0.2)
+                                  : Colors.transparent,
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                            ),
+                          ],
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          myDatabase.foodCategories[SelectedContainer],
+                          style: TextStyle(
+                            color: _selectedCatagory == SelectedContainer
+                                ? kBackgroundColor
+                                : kContainerTextColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+          ),
         ],
       ),
     );
