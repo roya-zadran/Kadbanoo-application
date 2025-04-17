@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kadbanoo/screens/about.dart';
 import 'package:kadbanoo/screens/homeScreen.dart';
 import 'package:kadbanoo/screens/favoritescreen.dart';
 import 'package:kadbanoo/screens/settingScreen.dart';
@@ -19,9 +20,9 @@ class KadbanooApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => HomeScreen(),
-        '/favorite': (context) => favoriteScreen(),
+        '/favorite': (context) => FavoriteScreen( ),
         '/settings': (context) => SettingScreen(),
-
+        '/about': (context) => AboutScreen(),
 
       },
       initialRoute: '/',

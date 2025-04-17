@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kadbanoo/utilities/constants.dart';
 
 class NewListTileWidget extends StatelessWidget {
   final IconData? icon;
@@ -6,14 +7,17 @@ class NewListTileWidget extends StatelessWidget {
   final onTap;
 
   const NewListTileWidget(
-      {super.key, required this.icon, required this.text, required this.onTap});
+      {super.key, this.icon, required this.text, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(icon),
-      title: Text(text!),
-      onTap: () => Navigator.pushNamed(context, onTap),
-    );
+    return
+      Container(
+        child: ListTile(
+        leading: Icon(icon),
+        title: Text(text!, textDirection: TextDirection.rtl,style: kDrawerItemsStyle),
+        onTap: () => Navigator.pushNamed(context, onTap),
+            ),
+      );
   }
 }

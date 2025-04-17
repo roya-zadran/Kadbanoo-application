@@ -117,7 +117,7 @@
     },
     {
       "name": "html",
-      "rootUri": "file:///C:/Users/Dell.com/AppData/Local/Pub/Cache/hosted/pub.dev/html-0.15.5",
+      "rootUri": "file:///C:/Users/Dell.com/AppData/Local/Pub/Cache/hosted/pub.dev/html-0.15.5+1",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -272,7 +272,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-04-12T23:47:04.863343Z",
+  "generated": "2025-04-16T05:59:46.663409Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///C:/Users/Dell.com/AppData/Local/Flutter%20SDK",

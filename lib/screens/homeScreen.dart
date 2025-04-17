@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kadbanoo/createdWidgets/NewListTileWidget.dart';
+import 'package:kadbanoo/createdWidgets/foodItemClass.dart';
 import 'package:kadbanoo/utilities/constants.dart';
 import 'package:kadbanoo/createdWidgets/foodCard.dart';
 import 'package:kadbanoo/createdWidgets/foodDescriptionList.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 DataBase myDatabase = DataBase();
 
@@ -14,7 +16,31 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedCatagory = 1;
+  int _selectedCategory = 1;
+  String _search = '';
+  List<FoodItem> _filteredFoodItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _updateFilteredFoodItems(); // Initialize filtered food items
+  }
+
+  void _updateFilteredFoodItems() {
+    setState(() {
+      // Get food items for the selected category
+      List<FoodItem> foodItems = myDatabase.foodCards[_selectedCategory];
+
+      // Filter based on search query
+      if (_search.isEmpty) {
+        _filteredFoodItems = foodItems; // Show all items if no search query
+      } else {
+        _filteredFoodItems = foodItems.where((item) {
+          return item.name.toLowerCase().contains(_search.toLowerCase());
+        }).toList();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,22 +74,22 @@ class _HomeScreenState extends State<HomeScreen> {
         width: 310,
         backgroundColor: kBottomContainerColor,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 70, horizontal: 8),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
           child: ListView(
             children: [
               NewListTileWidget(
-                  icon: Icons.home, text: 'Home', onTap: '/'),
-              NewListTileWidget(
-                  icon: Icons.favorite, text: 'Favorites', onTap: '/favorite'),
-              NewListTileWidget(
-                  icon: Icons.settings, text: 'Settings', onTap: '/settings'),
+                  icon: FontAwesomeIcons.bars, text: '', onTap: '/'),
+              SizedBox(height: 100),
+              NewListTileWidget(text: 'تنضیمات', onTap: '/settings'),
+              NewListTileWidget(text: 'درباره', onTap: '/about'),
+              NewListTileWidget(text: 'موارد دلخواه', onTap: '/favorite'),
             ],
           ),
         ),
       ),
       body: Column(
         children: [
-          // creating a  Search Bar
+          // Creating a Search Bar
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
             child: Card(
@@ -72,6 +98,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: BorderRadius.circular(500),
               ),
               child: TextField(
+                onChanged: (value) {
+                  _search = value; // Update the search query
+                  _updateFilteredFoodItems(); // Update the filtered items
+                },
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: kBackgroundColor,
@@ -83,23 +113,21 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          // Grid view for food items
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  // it means the grid will have 2 columns
                   crossAxisSpacing: 10,
-                  // it means the horizontal space btw the columns
                   mainAxisSpacing: 4,
-                  // the vertical space btw cards
-                  childAspectRatio:
-                  0.8, // th ratio of width and height of the child in grid/card
+                  childAspectRatio: 0.8,
                 ),
-                itemCount: myDatabase.foodCards[_selectedCatagory].length,
-                itemBuilder: (context, index) => FoodCard(
-                    foodItem: myDatabase.foodCards[_selectedCatagory][index]),
+                itemCount: _filteredFoodItems.length, // Use filtered items length
+                itemBuilder: (context, index) {
+                  return FoodCard(foodItem: _filteredFoodItems[index]);
+                },
               ),
             ),
           ),
@@ -109,47 +137,40 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: BoxDecoration(color: kBottomContainerColor),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(myDatabase.foodCategories.length,
-                      (SelectedContainer) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _selectedCatagory = SelectedContainer;
-                        });
-                      },
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 100),
-                        // Adjust width for 'همه'
-                        width: SelectedContainer == 1 ? 70 : 100,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: _selectedCatagory == SelectedContainer
-                              ? kBottomContainerColor
-                              : Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: _selectedCatagory == SelectedContainer
-                                  ? Colors.black.withOpacity(0.2)
-                                  : Colors.transparent,
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                            ),
-                          ],
+              children: List.generate(myDatabase.foodCategories.length, (index) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _selectedCategory = index;
+                      _updateFilteredFoodItems(); // Refresh the filtered items on category change
+                    });
+                  },
+                  child: AnimatedContainer(
+                    duration: Duration(milliseconds: 5),
+                    width: index == 1 ? 70 : 100,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: _selectedCategory == index ? kBottomContainerColor : Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: _selectedCategory == index ? Colors.black.withOpacity(0.2) : Colors.transparent,
+                          spreadRadius: 2,
+                          blurRadius: 5,
                         ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          myDatabase.foodCategories[SelectedContainer],
-                          style: TextStyle(
-                            color: _selectedCatagory == SelectedContainer
-                                ? kBackgroundColor
-                                : kContainerTextColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                      ],
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      myDatabase.foodCategories[index],
+                      style: TextStyle(
+                        color: _selectedCategory == index ? kBackgroundColor : kContainerTextColor,
+                        fontWeight: FontWeight.bold,
                       ),
-                    );
-                  }),
+                    ),
+                  ),
+                );
+              }),
             ),
           ),
         ],

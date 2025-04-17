@@ -1,16 +1,24 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kadbanoo/utilities/favorite_manager.dart';
 import 'package:kadbanoo/createdWidgets/foodItemClass.dart';
-import 'package:kadbanoo/utilities/constants.dart';
 import 'package:kadbanoo/screens/foodDetailedScreen.dart';
+import 'package:kadbanoo/utilities/constants.dart';
 
-class FoodCard extends StatelessWidget {
+
+class FoodCard extends StatefulWidget {
   final FoodItem foodItem;
 
   const FoodCard({super.key, required this.foodItem});
 
   @override
+  State<FoodCard> createState() => _FoodCardState();
+}
+
+class _FoodCardState extends State<FoodCard> {
+  @override
   Widget build(BuildContext context) {
+    bool isFavorite = FavoriteManager.isFavorite(widget.foodItem);
+
     return Card(
       elevation: 3,
       color: kBackgroundColor,
@@ -20,7 +28,7 @@ class FoodCard extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => FoodDetailScreen(),
+              builder: (context) => FoodDetailScreen(foodItem: widget.foodItem),
             ),
           );
         },
@@ -43,7 +51,7 @@ class FoodCard extends StatelessWidget {
                       ],
                     ),
                     child: Image.asset(
-                      foodItem.image, // Use Image.asset for local images
+                      widget.foodItem.image,
                       fit: BoxFit.cover,
                       width: double.infinity,
                     ),
@@ -52,10 +60,7 @@ class FoodCard extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  foodItem.name,
-                  style: kFoodCardNamesStyle
-                ),
+                child: Text(widget.foodItem.name, style: kFoodCardNamesStyle),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -66,15 +71,20 @@ class FoodCard extends StatelessWidget {
                       children: [
                         Icon(Icons.star, color: Colors.amber, size: 16),
                         Text(
-                          foodItem.rating.toString(),
+                          widget.foodItem.rating.toString(),
                           style: kRattingStyle,
                         ),
                       ],
                     ),
                     IconButton(
-                      icon: Icon(Icons.favorite_border),
+                      icon: Icon(
+                        isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: isFavorite ? Colors.red : Colors.black,
+                      ),
                       onPressed: () {
-                        // Implement favorite action here
+                        setState(() {
+                          FavoriteManager.addingFavorite(widget.foodItem);
+                        });
                       },
                     ),
                   ],
