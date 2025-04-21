@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/kadbanooapp.iml" filepath="$PROJECT_DIR$/.idea/kadbanooapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/kadbanooapp_android.iml" filepath="$PROJECT_DIR$/android/kadbanooapp_android.iml" />
     </modules>
   </component>
 </project>

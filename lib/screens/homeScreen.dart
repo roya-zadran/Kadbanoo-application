@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: 30,
+                      fontSize: 25,
                     )),
                 Text('!تجربه خوشمزه گی با کد بانو ',
                     style: TextStyle(
@@ -65,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                     )),
+                SizedBox(height: 12),
               ],
             ),
           ),
@@ -74,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
         width: 310,
         backgroundColor: kBottomContainerColor,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
           child: ListView(
             children: [
               NewListTileWidget(
@@ -87,9 +88,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+      resizeToAvoidBottomInset: false, // Prevent bottom container from overlapping keyboard
       body: Column(
         children: [
-          // Creating a Search Bar
+          // Search Bar
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
             child: Card(
@@ -99,8 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               child: TextField(
                 onChanged: (value) {
-                  _search = value; // Update the search query
-                  _updateFilteredFoodItems(); // Update the filtered items
+                  _search = value;
+                  _updateFilteredFoodItems();
                 },
                 decoration: InputDecoration(
                   filled: true,
@@ -113,25 +115,28 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          // Grid view for food items
+
+          // Grid view
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: GridView.builder(
+                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 4,
                   childAspectRatio: 0.8,
                 ),
-                itemCount: _filteredFoodItems.length, // Use filtered items length
+                itemCount: _filteredFoodItems.length,
                 itemBuilder: (context, index) {
                   return FoodCard(foodItem: _filteredFoodItems[index]);
                 },
               ),
             ),
           ),
-          // Category Cards
+
+          // Bottom Category Bar — not affected by keyboard now
           Container(
             height: 65,
             decoration: BoxDecoration(color: kBottomContainerColor),
@@ -142,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () {
                     setState(() {
                       _selectedCategory = index;
-                      _updateFilteredFoodItems(); // Refresh the filtered items on category change
+                      _updateFilteredFoodItems();
                     });
                   },
                   child: AnimatedContainer(

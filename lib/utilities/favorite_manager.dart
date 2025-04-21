@@ -16,4 +16,8 @@ class FavoriteManager {
   static bool isFavorite(FoodItem item) {
     return _favorites.contains(item);
   }
+
+  static void removeFavorite(FoodItem item) {
+    _favorites.remove(item);
+  }
 }
