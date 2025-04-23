@@ -116,6 +116,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "google_nav_bar",
+      "rootUri": "file:///C:/Users/Dell.com/AppData/Local/Pub/Cache/hosted/pub.dev/google_nav_bar-5.0.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "html",
       "rootUri": "file:///C:/Users/Dell.com/AppData/Local/Pub/Cache/hosted/pub.dev/html-0.15.5+1",
       "packageUri": "lib/",
@@ -272,7 +278,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-04-21T21:36:54.392050Z",
+  "generated": "2025-04-23T03:48:21.920041Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///C:/Users/Dell.com/AppData/Local/Flutter%20SDK",

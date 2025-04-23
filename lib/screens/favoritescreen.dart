@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kadbanoo/utilities/constants.dart';
 import 'package:kadbanoo/utilities/favorite_manager.dart';
 import 'package:kadbanoo/createdWidgets/foodCard.dart';
 
@@ -8,13 +9,12 @@ class FavoriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final favorites = FavoriteManager.favorites;
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Favorites'),
+        title: const Text('موارد دلخوا', style: kDrawerItemsStyle,),
       ),
       body: favorites.isEmpty
-          ? const Center(child: Text('No favorites yet!'))
+          ? const Center(child: Text('!موارد دلخوا موجود نیست'))
           : GridView.builder(
         padding: const EdgeInsets.all(10),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

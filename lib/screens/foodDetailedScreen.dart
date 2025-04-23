@@ -26,11 +26,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: kContainerTextColor),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
+        backgroundColor: kBackgroundColor,
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -38,77 +40,137 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Image.asset(
-                widget.foodItem.image,
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: 300,
+              // Image Section with Border Radius
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.asset(
+                  widget.foodItem.image,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: 280,
+                ),
               ),
               const SizedBox(height: 20),
+
+              // Food Name and Favorite Icon
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  IconButton(
-                    icon: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? Colors.red : Colors.black,
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    child: IconButton(
+                      key: ValueKey<bool>(isFavorite),
+                      icon: Icon(
+                        isFavorite
+                            ? Icons.favorite_rounded
+                            : Icons.favorite_border_rounded,
+                        color: isFavorite ? kBottomContainerColor : Colors.grey,
+                        size: 30,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          FavoriteManager.addingFavorite(widget.foodItem);
+                          isFavorite = FavoriteManager.isFavorite(widget.foodItem);
+                        });
+                      },
                     ),
-                    onPressed: () {
-                      setState(() {
-                        FavoriteManager.addingFavorite(widget.foodItem);
-                        isFavorite = FavoriteManager.isFavorite(widget.foodItem);
-                      });
-                    },
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       widget.foodItem.name,
-                      style: kFoodCardNamesStyle,
+                      style: kFoodCardNamesStyle.copyWith(fontSize: 22),
                       textAlign: TextAlign.right,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],
               ),
+
               const SizedBox(height: 10),
+
+              // Rating Section
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Icon(Icons.star, color: Colors.amber, size: 16),
-                  const SizedBox(width: 3),
+                  const Icon(Icons.star, color: Colors.amber, size: 20),
+                  const SizedBox(width: 4),
                   Text(
                     widget.foodItem.rating.toString(),
-                    style: kRattingStyle,
+                    style: kRattingStyle.copyWith(fontSize: 16),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+
+              const SizedBox(height: 25),
+
+              // Description Section
               Text(
                 widget.foodItem.description,
                 textDirection: TextDirection.rtl,
-                style: kContentStyle,
+                textAlign: TextAlign.justify,
+                style: kContentStyle.copyWith(
+                  height: 1.8,
+                  fontSize: 16,
+                  color: Colors.black87,
+                ),
               ),
-              const SizedBox(height: 40),
-              Text('مواد لازم', style: kFoodCardNamesStyle),
-              const SizedBox(height: 20),
+
+              const SizedBox(height: 30),
+
+              // Ingredients Title Section
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Icon(Icons.shopping_basket_outlined, color: Colors.green),
+                  const SizedBox(width: 8),
+                  Text(
+                    'مواد لازم',
+                    style: kFoodCardNamesStyle.copyWith(fontSize: 20),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 15),
+
+              // Ingredients List
               SizedBox(
-                height: 100,
+                height: 130,
                 child: _buildIngredientList(widget.foodItem.ingredients),
               ),
-              const SizedBox(height: 30),
-              Text('دستور تهیه  📝', style: kFoodCardNamesStyle),
+
+              const SizedBox(height: 40),
+
+              // Recipe Title Section
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Icon(Icons.receipt_long, color: Colors.orange),
+                  const SizedBox(width: 8),
+                  Text(
+                    'دستور تهیه',
+                    style: kFoodCardNamesStyle.copyWith(fontSize: 20),
+                  ),
+                ],
+              ),
               const SizedBox(height: 15),
+
+              // Recipe Instructions
               Text(
                 widget.foodItem.recipe,
                 textDirection: TextDirection.rtl,
-                style: kContentStyle,
+                textAlign: TextAlign.justify,
+                style: kContentStyle.copyWith(
+                  height: 1.8,
+                  fontSize: 16,
+                  color: Colors.black87,
+                ),
               ),
             ],
           ),
         ),
       ),
     );
+
   }
 
   Widget _buildIngredientList(List<Ingredient> ingredients) {
@@ -118,35 +180,47 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       itemBuilder: (context, index) {
         final ingredient = ingredients[index];
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Container(
-            width: 100,
+            width: 120,
+            margin: const EdgeInsets.symmetric(vertical: 4),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              color: Colors.black,
+              gradient: LinearGradient(
+                colors: [ Colors.deepOrange,Color(0xFFFF2802)], // Soft Blue Gradient
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 6,
+                  offset: const Offset(0, 3),
+                ),
+              ],
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(12),
                   child: Image.asset(
                     ingredient.imagePath,
-                    width: 100,
+                    width: 80,
                     height: 50,
                     fit: BoxFit.cover,
                   ),
                 ),
                 const SizedBox(height: 6),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 6.0),
                   child: Text(
                     ingredient.name,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFFFFFFF),
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -159,4 +233,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       },
     );
   }
+
 }
+

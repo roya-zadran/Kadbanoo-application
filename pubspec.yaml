@@ -34,11 +34,16 @@ dependencies:
 
 
 
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   font_awesome_flutter: ^10.8.0
   flutter_native_splash: ^2.4.4
+  google_nav_bar: ^5.0.7
+
+
+
 
 
 
@@ -118,3 +123,9 @@ fonts:
       - asset: fonts/Karla-LightItalic.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_native_splash:
+  background_image: assets/splashScreen.jpg
+  android: true
+  ios: true
+  fullscreen: true
+
