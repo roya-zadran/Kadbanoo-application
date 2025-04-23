@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kadbanoo/createdWidgets/NewListTileWidget.dart';
-import 'package:kadbanoo/utilities/constants.dart';
-import 'package:kadbanoo/createdWidgets/foodCard.dart';
 import 'package:kadbanoo/createdWidgets/foodDescriptionList.dart';
+import 'package:kadbanoo/createdWidgets/foodItemClass.dart';
+import 'package:kadbanoo/createdWidgets/foodCard.dart';
+import 'package:kadbanoo/utilities/constants.dart';
+
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 DataBase myDatabase = DataBase();
 
@@ -12,9 +15,31 @@ class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
-
+int _selectedDrawerIndex = -1;
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedCatagory = 1;
+  int _selectedCategory = 1;
+  String _search = '';
+  List<FoodItem> _filteredFoodItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _updateFilteredFoodItems();
+  }
+
+  void _updateFilteredFoodItems() {
+    setState(() {
+      List<FoodItem> foodItems = myDatabase.foodCards[_selectedCategory];
+
+      if (_search.isEmpty) {
+        _filteredFoodItems = foodItems;
+      } else {
+        _filteredFoodItems = foodItems.where((item) {
+          return item.name.toLowerCase().contains(_search.toLowerCase());
+        }).toList();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +52,16 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text('کد بانو',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                    )),
-                Text('!تجربه خوشمزه گی با کد بانو ',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    )),
+                SizedBox(height: 10),
+                Text(
+                  'کد بانو',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
+                ),
+                SizedBox(height: 12),
               ],
             ),
           ),
@@ -48,108 +71,180 @@ class _HomeScreenState extends State<HomeScreen> {
         width: 310,
         backgroundColor: kBottomContainerColor,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 70, horizontal: 8),
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
           child: ListView(
             children: [
               NewListTileWidget(
-                  icon: Icons.home, text: 'Home', onTap: '/'),
+                icon: Icons.menu,
+                text: '',
+                onTap: '/',
+                isSelected: _selectedDrawerIndex == 0,
+                onTapCallback: () {
+                  setState(() {
+                    _selectedDrawerIndex = 0;
+                  });
+                },
+              ),
+              SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 20, 27, 50),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text('رویا زدران',
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                          height: 1,
+                          fontSize: 17,
+                          color: Colors.black,
+                        )),
+                    Text(
+                      'royazadran12@gmail.com',
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        height: 1,
+                        fontSize: 17,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               NewListTileWidget(
-                  icon: Icons.favorite, text: 'Favorites', onTap: '/favorite'),
+                text: 'تنضیمات',
+                onTap: '/settings',
+                isSelected: _selectedDrawerIndex == 1,
+                onTapCallback: () {
+                  setState(() {
+                    _selectedDrawerIndex = 1;
+                  });
+                },
+              ),
               NewListTileWidget(
-                  icon: Icons.settings, text: 'Settings', onTap: '/settings'),
+                text: 'درباره',
+                onTap: '/about',
+                isSelected: _selectedDrawerIndex == 2,
+                onTapCallback: () {
+                  setState(() {
+                    _selectedDrawerIndex = 2;
+                  });
+                },
+              ),
+              NewListTileWidget(
+                text: 'موارد دلخواه',
+                onTap: '/favorite',
+                isSelected: _selectedDrawerIndex == 3,
+                onTapCallback: () {
+                  setState(() {
+                    _selectedDrawerIndex = 3;
+                  });
+                },
+              ),
             ],
           ),
         ),
       ),
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
-          // creating a  Search Bar
+          // Search Bar
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-            child: Card(
-              elevation: 6,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(500),
+            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 18),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: Offset(0, 4),
+                  ),
+                ],
               ),
               child: TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: kBackgroundColor,
-                  border: InputBorder.none,
-                  suffixIcon: Icon(Icons.search),
-                  hintText: 'Search',
-                ),
+                onChanged: (value) {
+                  _search = value;
+                  _updateFilteredFoodItems();
+                },
                 style: kSearchStyle,
+                decoration: InputDecoration(
+                  hintText: 'جستجو',
+                  hintStyle: TextStyle(color: Colors.grey[600]),
+                  prefixIcon: Icon(Icons.search, color: Colors.grey[700]),
+                  border: InputBorder.none,
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 14, horizontal: 15),
+                ),
               ),
             ),
           ),
+
+          // Grid view
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
               child: GridView.builder(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  // it means the grid will have 2 columns
-                  crossAxisSpacing: 10,
-                  // it means the horizontal space btw the columns
-                  mainAxisSpacing: 4,
-                  // the vertical space btw cards
-                  childAspectRatio:
-                  0.8, // th ratio of width and height of the child in grid/card
+                  crossAxisSpacing: 25,
+                  mainAxisSpacing: 20,
+                  childAspectRatio: 0.9,
                 ),
-                itemCount: myDatabase.foodCards[_selectedCatagory].length,
-                itemBuilder: (context, index) => FoodCard(
-                    foodItem: myDatabase.foodCards[_selectedCatagory][index]),
+                itemCount: _filteredFoodItems.length,
+                itemBuilder: (context, index) {
+                  return FoodCard(foodItem: _filteredFoodItems[index]);
+                },
               ),
             ),
           ),
-          // Category Cards
+
+          // Bottom Category Bar — Using google_nav_bar
+          // Bottom Category Bar — Improved GNav
           Container(
-            height: 65,
-            decoration: BoxDecoration(color: kBottomContainerColor),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(myDatabase.foodCategories.length,
-                      (SelectedContainer) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _selectedCatagory = SelectedContainer;
-                        });
-                      },
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 100),
-                        // Adjust width for 'همه'
-                        width: SelectedContainer == 1 ? 70 : 100,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: _selectedCatagory == SelectedContainer
-                              ? kBottomContainerColor
-                              : Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: _selectedCatagory == SelectedContainer
-                                  ? Colors.black.withOpacity(0.2)
-                                  : Colors.transparent,
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                            ),
-                          ],
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          myDatabase.foodCategories[SelectedContainer],
-                          style: TextStyle(
-                            color: _selectedCatagory == SelectedContainer
-                                ? kBackgroundColor
-                                : kContainerTextColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
+            decoration: BoxDecoration(
+              color: Color(0xFFEF2B39),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 10,
+                  offset: Offset(0, -1),
+                )
+              ],
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            child: GNav(
+              gap: 8,
+              backgroundColor: Color(0xFFEF2B39),
+              color: Colors.grey[600],
+              activeColor: Colors.deepOrange,
+              tabBackgroundColor: Colors.deepOrange.withOpacity(0.1),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              selectedIndex: _selectedCategory,
+              onTabChange: (index) {
+                setState(() {
+                  _selectedCategory = index;
+                  _updateFilteredFoodItems();
+                });
+              },
+              tabs: List.generate(myDatabase.foodCategories.length, (index) {
+                final categoryName = myDatabase.foodCategories[index];
+                final categoryIcons = [
+                  Icons.icecream,
+                  Icons.fastfood_rounded,
+                  Icons.set_meal_rounded,
+                ];
+
+                return GButton(
+                  icon: categoryIcons[index % categoryIcons.length],
+                  text: categoryName,
+                  iconColor: Colors.white,
+                  textStyle: TextStyle(fontWeight: FontWeight.w600),
+                );
+              }),
             ),
           ),
         ],

@@ -32,11 +32,21 @@ dependencies:
     sdk: flutter
 
 
+
+
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   font_awesome_flutter: ^10.8.0
   flutter_native_splash: ^2.4.4
+  google_nav_bar: ^5.0.7
+
+
+
+
+
+
 
 
 
@@ -46,12 +56,14 @@ dev_dependencies:
     sdk: flutter
 
 
+
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -71,6 +83,7 @@ flutter:
      - assets/sweets_images/
      - assets/traditional_images/
      - assets/splashScreen.jpg
+     - assets/ingredients_images/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
@@ -87,14 +100,32 @@ fonts:
   - family: Samim Bold
     fonts:
       - asset: fonts/Samim Bold.ttf
-
-
-  - family: Shabnam Thin
+  - family: Karla ExtraBold Italic
     fonts:
-      - asset: fonts/Shabnam-Thin.ttf
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
+      - asset: fonts/Karla-ExtraBoldItalic.ttf
+  - family: Karla Bold Italic
+    fonts:
+      - asset: fonts/Karla-BoldItalic.ttf
+  - family: Karla ExtraLight Italic
+    fonts:
+      - asset: fonts/Karla-ExtraLightItalic.ttf
+  - family: Karla Italic
+    fonts:
+      - asset: fonts/Karla-Italic.ttf
+  - family: Karla SemiBold Italic
+    fonts:
+      - asset: fonts/Karla-SemiBoldItalic.ttf
+  - family: Karla Medium Italic
+    fonts:
+      - asset: fonts/Karla-MediumItalic.ttf
+  - family: Karla Light Italic
+    fonts:
+      - asset: fonts/Karla-LightItalic.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_native_splash:
+  background_image: assets/splashScreen.jpg
+  android: true
+  ios: true
+  fullscreen: true
+

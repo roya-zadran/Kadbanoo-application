@@ -1,89 +1,101 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kadbanoo/utilities/favorite_manager.dart';
 import 'package:kadbanoo/createdWidgets/foodItemClass.dart';
-import 'package:kadbanoo/utilities/constants.dart';
 import 'package:kadbanoo/screens/foodDetailedScreen.dart';
+import 'package:kadbanoo/utilities/constants.dart';
 
-class FoodCard extends StatelessWidget {
+class FoodCard extends StatefulWidget {
   final FoodItem foodItem;
 
   const FoodCard({super.key, required this.foodItem});
 
   @override
+  State<FoodCard> createState() => _FoodCardState();
+}
+
+class _FoodCardState extends State<FoodCard> {
+  @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      color: kBackgroundColor,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(26)),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => FoodDetailScreen(),
+    bool isFavorite = FavoriteManager.isFavorite(widget.foodItem);
+
+    return  GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FoodDetailScreen(foodItem: widget.foodItem),
+          ),
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: kBackgroundColor,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 6,
+              offset: Offset(2, 2),
             ),
-          );
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.5),
-                          blurRadius: 10,
-                          offset: Offset(5, 5),
-                        ),
-                      ],
-                    ),
-                    child: Image.asset(
-                      foodItem.image, // Use Image.asset for local images
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                    ),
-                  ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              flex: 6,
+              child: ClipRRect(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                child: Image.asset(
+                  widget.foodItem.image,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
                 ),
               ),
-              Padding(
+            ),
+            Expanded(
+              flex: 4,
+              child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  foodItem.name,
-                  style: kFoodCardNamesStyle
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Text(
+                      widget.foodItem.name,
+                      style: kFoodCardNamesStyle,
+                      textAlign: TextAlign.center,
+                    ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(Icons.star, color: Colors.amber, size: 16),
-                        Text(
-                          foodItem.rating.toString(),
-                          style: kRattingStyle,
+                        Row(
+                          children: [
+                            Icon(Icons.star, color: Colors.amber, size: 16),
+                            Text(
+                              widget.foodItem.rating.toString(),
+                              style: kRattingStyle,
+                            ),
+                          ],
+                        ),
+                        Icon(
+                          FavoriteManager.isFavorite(widget.foodItem)
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          color: FavoriteManager.isFavorite(widget.foodItem)
+                              ? Colors.red
+                              : Colors.black,
                         ),
                       ],
                     ),
-                    IconButton(
-                      icon: Icon(Icons.favorite_border),
-                      onPressed: () {
-                        // Implement favorite action here
-                      },
-                    ),
+                    SizedBox(height: 1),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
+
   }
 }

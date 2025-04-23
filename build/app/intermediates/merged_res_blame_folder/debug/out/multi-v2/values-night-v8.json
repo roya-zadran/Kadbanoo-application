@@ -8,18 +8,18 @@
                     "from": {
                         "startLines": "3,18",
                         "startColumns": "4,4",
-                        "startOffsets": "172,1094",
+                        "startOffsets": "172,1092",
                         "endLines": "11,20",
                         "endColumns": "12,12",
-                        "endOffsets": "747,1258"
+                        "endOffsets": "745,1256"
                     },
                     "to": {
                         "startLines": "2,10",
                         "startColumns": "4,4",
-                        "startOffsets": "55,507",
+                        "startOffsets": "55,505",
                         "endLines": "9,12",
                         "endColumns": "12,12",
-                        "endOffsets": "502,671"
+                        "endOffsets": "500,669"
                     }
                 }
             ]

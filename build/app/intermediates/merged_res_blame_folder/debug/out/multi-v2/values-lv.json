@@ -4,7 +4,7 @@
             "outputFile": "com.example.kadbanoo.app-mergeDebugResources-24:/values-lv/values-lv.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Dell.com\\.gradle\\caches\\transforms-3\\28ee8a5ebc96d117de5598ee6fce01ba\\transformed\\core-1.13.1\\res\\values-lv\\values-lv.xml",
+                    "source": "C:\\Users\\Dell.com\\.gradle\\caches\\transforms-3\\bbd3c057f7fccbc2113f79a0fa0d6e7c\\transformed\\core-1.13.1\\res\\values-lv\\values-lv.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

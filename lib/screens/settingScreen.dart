@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kadbanoo/utilities/constants.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -7,10 +8,10 @@ class SettingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: const Text('تنضیمات ', style: kDrawerItemsStyle,),
       ),
       body: const Center(
-        child: Text('Settings Page'),
+        child: Text(''),
       ),
     );
   }
