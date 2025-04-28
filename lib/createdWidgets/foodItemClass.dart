@@ -28,7 +28,7 @@ class FoodItem {
       identical(this, other) ||
           other is FoodItem &&
               runtimeType == other.runtimeType &&
-              name == other.name; // You can use a better ID if you have one
+              name == other.name;
 
   @override
   int get hashCode => name.hashCode;

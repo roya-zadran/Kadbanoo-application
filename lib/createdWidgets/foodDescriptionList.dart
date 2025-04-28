@@ -1,6 +1,6 @@
 import 'package:kadbanoo/createdWidgets/foodItemClass.dart';
 
-class DataBase {
+class CrazyLongClass {
   final List<String> foodCategories = ['شیرینی ها ', 'همه', 'غذا های سنتی'];
 
   // In here, list<List<foodItem> is an outer list which each index of it represent foodCatgorise, the list<FoodItem> is for the item of foods.

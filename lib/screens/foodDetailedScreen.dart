@@ -23,6 +23,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the current brightness mode (light or dark)
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -79,7 +82,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   Expanded(
                     child: Text(
                       widget.foodItem.name,
-                      style: kFoodCardNamesStyle.copyWith(fontSize: 22),
+                      style: kFoodCardNamesStyle.copyWith(
+                        fontSize: 22,
+                        color: isDarkMode ? Colors.white : Colors.black,
+                      ),
                       textAlign: TextAlign.right,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -112,7 +118,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 style: kContentStyle.copyWith(
                   height: 1.8,
                   fontSize: 16,
-                  color: Colors.black87,
+                  color: isDarkMode ? Colors.white : Colors.black87,
                 ),
               ),
 
@@ -126,7 +132,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   const SizedBox(width: 8),
                   Text(
                     'مواد لازم',
-                    style: kFoodCardNamesStyle.copyWith(fontSize: 20),
+                    style: kFoodCardNamesStyle.copyWith(
+                      fontSize: 20,
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
                   ),
                 ],
               ),
@@ -148,7 +157,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   const SizedBox(width: 8),
                   Text(
                     'دستور تهیه',
-                    style: kFoodCardNamesStyle.copyWith(fontSize: 20),
+                    style: kFoodCardNamesStyle.copyWith(
+                      fontSize: 20,
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
                   ),
                 ],
               ),
@@ -162,7 +174,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 style: kContentStyle.copyWith(
                   height: 1.8,
                   fontSize: 16,
-                  color: Colors.black87,
+                  color: isDarkMode ? Colors.white : Colors.black87,
                 ),
               ),
             ],
@@ -170,7 +182,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         ),
       ),
     );
-
   }
 
   Widget _buildIngredientList(List<Ingredient> ingredients) {
@@ -233,6 +244,4 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       },
     );
   }
-
 }
-
