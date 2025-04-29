@@ -7,7 +7,7 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar( backgroundColor:  Color(0xFFEF2B39),
         title: const Text('درباره', style: kDrawerItemsStyle),
       ),
       body: Padding(
@@ -48,7 +48,7 @@ class AboutScreen extends StatelessWidget {
                 textDirection: TextDirection.rtl,
                 child: Text(
                   'کدبانو یک اپلیکیشن ساده و آموزشی برای علاقه‌مندان به یادگیری غذاهای افغانی است. این برنامه شامل مجموعه‌ای از دستورهای پخت آسان و خانگی می‌باشد که با زبان ساده و قابل فهم توضیح داده شده‌اند.\n\n'
-                      'این اپلیکیشن توسط رویا زدران و فرزانه، شاگردان رشته توسعه اپلیکیشن اندروید در مؤسسه Code To Inspire (CTI) ساخته شده است و با راهنمایی استادان محترم فرشته فروغ و عالم دانشیار پیش‌برد یافته است.\n\n'
+                      'این اپلیکیشن توسط رویا زدران شاگرد رشته توسعه اپلیکیشن اندروید در مؤسسه Code To Inspire (CTI) ساخته شده است و با راهنمایی استادان محترم فرشته فروغ و عالم دانشیار پیش‌برد یافته است.\n\n'
                       'هدف ما ساده‌سازی آموزش آشپزی و ترویج فرهنگ لذیذ آشپزی افغانستان است.',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 15),

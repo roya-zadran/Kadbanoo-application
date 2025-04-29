@@ -1,6 +1,6 @@
 import 'package:kadbanoo/createdWidgets/foodItemClass.dart';
 
-class DataBase {
+class CrazyLongClass {
   final List<String> foodCategories = ['شیرینی ها ', 'همه', 'غذا های سنتی'];
 
   // In here, list<List<foodItem> is an outer list which each index of it represent foodCatgorise, the list<FoodItem> is for the item of foods.
@@ -184,15 +184,15 @@ class DataBase {
         image: 'assets/sweets_images/Qatabi_ Afghani.jpeg',
         rating: 4.6,
         description:
-            'قطاب یک شیرینی پر از مغز گردو است که طعم شیرین و بافت تردی دارد.',
+        'قطاب یک شیرینی پر از مغز گردو است که طعم شیرین و بافت تردی دارد.',
         recipe:
-            'آرد، روغن، تخم‌مرغ، شیر و پودر هل را مخلوط کنید تا خمیر یکدستی به دست آید. خمیر را به گلوله‌های کوچک تقسیم کرده و                                                                                                               آن‌ها را باز کنید. مقداری گردو و شکر در وسط هر قطاب قرار دهید و آن را ببندید. روغن را داغ کرده و قطاب‌ها را سرخ کنید تا طلایی شوند پس از خنک شدن، روی آن‌ها پودر قند بپاشید و سرو کنید.',
+        'آرد، روغن، تخم‌مرغ، شیر و پودر هل را مخلوط کنید تا خمیر یکدستی به دست آید. خمیر را به گلوله‌های کوچک تقسیم کرده و آن‌ها را باز کنید. مقداری گردو و شکر در وسط هر قطاب قرار دهید و آن را ببندید. روغن را داغ کرده و قطاب‌ها را سرخ کنید تا طلایی شوند پس از خنک شدن، روی آن‌ها پودر قند بپاشید و سرو کنید.',
         ingredients: [
           Ingredient(
               name: 'آرد:  ۲ پیمانه ',
               imagePath: 'assets/ingredients_images/Ard.jpg'),
           Ingredient(
-              name: 'روغن جامد یا کره:  ۱ پیمانه ',
+              name: 'روغن:  ۱ پیمانه ',
               imagePath: 'assets/ingredients_images/kara.jpg'),
           Ingredient(
               name: 'تخم‌مرغ:  ۱ عدد',
@@ -204,10 +204,10 @@ class DataBase {
               name: 'پودر هل:  ۱ قاشق چای‌خوری',
               imagePath: 'assets/ingredients_images/pudar_hil.jpg'),
           Ingredient(
-              name: 'گردو خردشده:  ۱ پیمانه ',
+              name: 'گردو خردشده:  ۱ پیمانه',
               imagePath: 'assets/ingredients_images/gardu.jpg'),
           Ingredient(
-              name: 'شکر:  ۱ پیمانه ',
+              name: 'شکر:  ۱ پیمانه',
               imagePath: 'assets/ingredients_images/Sugar.jpeg'),
           Ingredient(
               name: 'روغن:  به میزان لازم',
@@ -1517,7 +1517,7 @@ class DataBase {
         description:
             'قطاب یک شیرینی پر از مغز گردو است که طعم شیرین و بافت تردی دارد.',
         recipe:
-            'آرد، روغن، تخم‌مرغ، شیر و پودر هل را مخلوط کنید تا خمیر یکدستی به دست آید. خمیر را به گلوله‌های کوچک تقسیم کرده و                                                                                                               آن‌ها را باز کنید. مقداری گردو و شکر در وسط هر قطاب قرار دهید و آن را ببندید. روغن را داغ کرده و قطاب‌ها را سرخ کنید تا طلایی شوند پس از خنک شدن، روی آن‌ها پودر قند بپاشید و سرو کنید.',
+            'آرد، روغن، تخم‌مرغ، شیر و پودر هل را مخلوط کنید تا خمیر یکدستی به دست آید. خمیر را به گلوله‌های کوچک تقسیم کرده و آن‌ها را باز کنید. مقداری گردو و شکر در وسط هر قطاب قرار دهید و آن را ببندید. روغن را داغ کرده و قطاب‌ها را سرخ کنید تا طلایی شوند پس از خنک شدن، روی آن‌ها پودر قند بپاشید و سرو کنید.',
         ingredients: [
           Ingredient(
               name: 'آرد:  ۲ پیمانه ',

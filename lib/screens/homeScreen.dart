@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:kadbanoo/createdWidgets/NewListTileWidget.dart';
+import 'package:kadbanoo/createdWidgets/foodCard.dart';
 import 'package:kadbanoo/createdWidgets/foodDescriptionList.dart';
 import 'package:kadbanoo/createdWidgets/foodItemClass.dart';
-import 'package:kadbanoo/createdWidgets/foodCard.dart';
 import 'package:kadbanoo/utilities/constants.dart';
-
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-DataBase myDatabase = DataBase();
+CrazyLongClass longClassChild = CrazyLongClass();
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final Function toggleTheme;
+  const HomeScreen({super.key, required this.toggleTheme});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
+
 int _selectedDrawerIndex = -1;
+
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedCategory = 1;
   String _search = '';
@@ -29,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _updateFilteredFoodItems() {
     setState(() {
-      List<FoodItem> foodItems = myDatabase.foodCards[_selectedCategory];
+      List<FoodItem> foodItems = longClassChild.foodCards[_selectedCategory];
 
       if (_search.isEmpty) {
         _filteredFoodItems = foodItems;
@@ -44,8 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kBackgroundColor,
+      appBar: AppBar( backgroundColor: kBackgroundColor,
         title: Align(
           alignment: Alignment.centerRight,
           child: SafeArea(
@@ -74,9 +75,39 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
           child: ListView(
             children: [
+              // User profile section
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(width: 15),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'رویا زدران',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          'royazadran12@gmail.com',
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Divider(color: Colors.grey, height:60,),
+
+              // Drawer options
               NewListTileWidget(
                 icon: Icons.menu,
-                text: '',
+                text: 'خانه',
                 onTap: '/',
                 isSelected: _selectedDrawerIndex == 0,
                 onTapCallback: () {
@@ -85,42 +116,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
               ),
-              SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 20, 27, 50),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text('رویا زدران',
-                        textAlign: TextAlign.justify,
-                        style: TextStyle(
-                          height: 1,
-                          fontSize: 17,
-                          color: Colors.black,
-                        )),
-                    Text(
-                      'royazadran12@gmail.com',
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                        height: 1,
-                        fontSize: 17,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               NewListTileWidget(
-                text: 'تنضیمات',
-                onTap: '/settings',
-                isSelected: _selectedDrawerIndex == 1,
-                onTapCallback: () {
-                  setState(() {
-                    _selectedDrawerIndex = 1;
-                  });
-                },
-              ),
-              NewListTileWidget(
+                icon: Icons.info_outline,
                 text: 'درباره',
                 onTap: '/about',
                 isSelected: _selectedDrawerIndex == 2,
@@ -131,6 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               NewListTileWidget(
+                icon: Icons.favorite_border,
                 text: 'موارد دلخواه',
                 onTap: '/favorite',
                 isSelected: _selectedDrawerIndex == 3,
@@ -139,6 +137,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     _selectedDrawerIndex = 3;
                   });
                 },
+              ),
+              Divider(color: Colors.grey, height: 50),
+
+              SwitchListTile(
+                value: Theme.of(context).brightness == Brightness.dark,
+                onChanged: (bool value) {
+                  widget.toggleTheme();
+                },
+                activeColor: Colors.deepOrange,
+                title: Text('حالت شب', style: kDrawerItemsStyle),
               ),
             ],
           ),
@@ -173,8 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   hintStyle: TextStyle(color: Colors.grey[600]),
                   prefixIcon: Icon(Icons.search, color: Colors.grey[700]),
                   border: InputBorder.none,
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 14, horizontal: 15),
+                  contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 15),
                 ),
               ),
             ),
@@ -185,8 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
               child: GridView.builder(
-                keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
+                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 25,
@@ -201,8 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
 
-          // Bottom Category Bar — Using google_nav_bar
-          // Bottom Category Bar — Improved GNav
+          // Bottom Navigation Bar
           Container(
             decoration: BoxDecoration(
               color: Color(0xFFEF2B39),
@@ -230,8 +235,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   _updateFilteredFoodItems();
                 });
               },
-              tabs: List.generate(myDatabase.foodCategories.length, (index) {
-                final categoryName = myDatabase.foodCategories[index];
+              tabs: List.generate(longClassChild.foodCategories.length, (index) {
+                final categoryName = longClassChild.foodCategories[index];
                 final categoryIcons = [
                   Icons.icecream,
                   Icons.fastfood_rounded,

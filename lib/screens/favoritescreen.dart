@@ -10,18 +10,18 @@ class FavoriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final favorites = FavoriteManager.favorites;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('موارد دلخوا', style: kDrawerItemsStyle,),
+      appBar: AppBar(backgroundColor:  Color(0xFFEF2B39),
+        title: const Text('موارد دلخوا', style: kDrawerItemsStyle),
       ),
       body: favorites.isEmpty
           ? const Center(child: Text('!موارد دلخوا موجود نیست'))
           : GridView.builder(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(15),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 4,
-          childAspectRatio: 0.8,
+          crossAxisSpacing: 25,
+          mainAxisSpacing: 20,
+          childAspectRatio: 0.9,
         ),
         itemCount: favorites.length,
         itemBuilder: (context, index) {

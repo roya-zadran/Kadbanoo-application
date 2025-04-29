@@ -2,30 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:kadbanoo/screens/about.dart';
 import 'package:kadbanoo/screens/homeScreen.dart';
 import 'package:kadbanoo/screens/favoritescreen.dart';
-import 'package:kadbanoo/screens/settingScreen.dart';
+import 'package:kadbanoo/utilities/favorite_manager.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await FavoriteManager.loadFavorites();
   runApp(KadbanooApp());
 }
 
-class KadbanooApp extends StatelessWidget {
+class KadbanooApp extends StatefulWidget {
   const KadbanooApp({super.key});
+
+  @override
+  _KadbanooAppState createState() => _KadbanooAppState();
+}
+
+class _KadbanooAppState extends State<KadbanooApp> {
+  bool _isDarkMode = false;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light().copyWith(
-        scaffoldBackgroundColor: Colors.white,
-      ),
+      theme: _isDarkMode ? ThemeData.dark() : ThemeData.light(),
       routes: {
-        '/': (context) => HomeScreen(),
-        '/favorite': (context) => FavoriteScreen( ),
-        '/settings': (context) => SettingScreen(),
+        '/': (context) => HomeScreen(toggleTheme: _toggleTheme),
+        '/favorite': (context) => FavoriteScreen(),
         '/about': (context) => AboutScreen(),
-
       },
       initialRoute: '/',
     );
+  }
+
+  void _toggleTheme() {
+    setState(() {
+      _isDarkMode = !_isDarkMode;
+    });
   }
 }
