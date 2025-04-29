@@ -23,7 +23,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Get the current brightness mode (light or dark)
     bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(

@@ -23,10 +23,9 @@ class NewListTileWidget extends StatelessWidget {
     return Container(
       color: isSelected ? Colors.deepOrange.withOpacity(0.3) : null,
       child: ListTile(
-        leading: Icon(icon),
-        title: Text(
+        leading:  Text(
           text!,
-          textDirection: TextDirection.rtl,
+          textDirection: TextDirection.ltr,
           style: kDrawerItemsStyle,
         ),
         onTap: () {
@@ -36,6 +35,7 @@ class NewListTileWidget extends StatelessWidget {
             Navigator.pushNamed(context, onTap);
           });
         },
+        trailing: Icon(icon),
       ),
     );
   }

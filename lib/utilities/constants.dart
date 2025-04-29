@@ -19,4 +19,4 @@ const kSearchStyle = TextStyle(
     fontWeight: FontWeight.bold, fontFamily: 'fonts/Samim Bold/Samim Bold.ttf');
 
 const kContentStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color:Colors.grey);
-const kDrawerItemsStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 17, );
+const kDrawerItemsStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 17,color: Colors.black );

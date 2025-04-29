@@ -10,7 +10,7 @@ class FavoriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final favorites = FavoriteManager.favorites;
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(backgroundColor:  Color(0xFFEF2B39),
         title: const Text('موارد دلخوا', style: kDrawerItemsStyle),
       ),
       body: favorites.isEmpty

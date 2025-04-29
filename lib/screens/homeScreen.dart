@@ -46,8 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kBackgroundColor,
+      appBar: AppBar( backgroundColor: kBackgroundColor,
         title: Align(
           alignment: Alignment.centerRight,
           child: SafeArea(
@@ -78,12 +77,13 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               // User profile section
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(18.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     SizedBox(width: 15),
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
                           'رویا زدران',
@@ -95,14 +95,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Text(
                           'royazadran12@gmail.com',
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          style: TextStyle(fontSize: 16, color: Colors.black),
                         ),
                       ],
                     ),
                   ],
                 ),
               ),
-              Divider(color: Colors.grey),
+              Divider(color: Colors.grey, height:60,),
 
               // Drawer options
               NewListTileWidget(
@@ -138,16 +138,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
               ),
-              Divider(color: Colors.grey),
+              Divider(color: Colors.grey, height: 50),
 
-              // Theme toggle option inside the drawer
               SwitchListTile(
                 value: Theme.of(context).brightness == Brightness.dark,
                 onChanged: (bool value) {
-                  widget.toggleTheme(); // Toggle theme when changed
+                  widget.toggleTheme();
                 },
-                title: Text('حالت شب'),
-                activeColor: Colors.deepOrange, // Theme toggle color
+                activeColor: Colors.deepOrange,
+                title: Text('حالت شب', style: kDrawerItemsStyle),
               ),
             ],
           ),

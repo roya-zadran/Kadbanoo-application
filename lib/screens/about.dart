@@ -7,7 +7,7 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar( backgroundColor:  Color(0xFFEF2B39),
         title: const Text('درباره', style: kDrawerItemsStyle),
       ),
       body: Padding(
