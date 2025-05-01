@@ -23,7 +23,8 @@ class NewListTileWidget extends StatelessWidget {
     return Container(
       color: isSelected ? Colors.deepOrange.withOpacity(0.3) : null,
       child: ListTile(
-        leading:  Text(
+        leading: Icon(icon, color: Color(0xFFFFFFFF)),
+        trailing: Text(
           text!,
           textDirection: TextDirection.ltr,
           style: kDrawerItemsStyle,
@@ -31,11 +32,10 @@ class NewListTileWidget extends StatelessWidget {
         onTap: () {
           onTapCallback();
 
-          Future.delayed(Duration(milliseconds: 150), () {
+          Future.delayed(Duration(milliseconds: 100), () {
             Navigator.pushNamed(context, onTap);
           });
         },
-        trailing: Icon(icon),
       ),
     );
   }

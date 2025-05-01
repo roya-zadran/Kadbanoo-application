@@ -10,6 +10,7 @@ CrazyLongClass longClassChild = CrazyLongClass();
 
 class HomeScreen extends StatefulWidget {
   final Function toggleTheme;
+
   const HomeScreen({super.key, required this.toggleTheme});
 
   @override
@@ -46,13 +47,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( backgroundColor: kBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: kBackgroundColor,
         title: Align(
           alignment: Alignment.centerRight,
           child: SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
+              children: const [
                 SizedBox(height: 10),
                 Text(
                   'کد بانو',
@@ -70,77 +72,81 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       drawer: Drawer(
         width: 310,
-        backgroundColor: kBottomContainerColor,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
-          child: ListView(
-            children: [
-              // User profile section
-              Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(width: 15),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          'رویا زدران',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Text(
-                          'royazadran12@gmail.com',
-                          style: TextStyle(fontSize: 16, color: Colors.black),
-                        ),
-                      ],
+        backgroundColor: const Color(0xFFEF2B39),
+        child: ListView(
+          padding:
+              const EdgeInsets.only(top: 60, left: 12, right: 12, bottom: 10),
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  height: 160,
+                  width: 160,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: AssetImage('assets/icon.png'),
+                      fit: BoxFit.cover,
                     ),
-                  ],
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 20,
+                        offset: Offset(0, 6),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Divider(color: Colors.grey, height:60,),
-
-              // Drawer options
-              NewListTileWidget(
-                icon: Icons.menu,
-                text: 'خانه',
-                onTap: '/',
-                isSelected: _selectedDrawerIndex == 0,
-                onTapCallback: () {
-                  setState(() {
-                    _selectedDrawerIndex = 0;
-                  });
-                },
-              ),
-              NewListTileWidget(
-                icon: Icons.info_outline,
-                text: 'درباره',
-                onTap: '/about',
-                isSelected: _selectedDrawerIndex == 2,
-                onTapCallback: () {
-                  setState(() {
-                    _selectedDrawerIndex = 2;
-                  });
-                },
-              ),
-              NewListTileWidget(
-                icon: Icons.favorite_border,
-                text: 'موارد دلخواه',
-                onTap: '/favorite',
-                isSelected: _selectedDrawerIndex == 3,
-                onTapCallback: () {
-                  setState(() {
-                    _selectedDrawerIndex = 3;
-                  });
-                },
-              ),
-              Divider(color: Colors.grey, height: 50),
-
-              SwitchListTile(
+                const SizedBox(height: 15),
+                Text(
+                  'کد بانو',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
+                ),
+              ],
+            ),
+            const Divider(color: Colors.grey, height: 40),
+            NewListTileWidget(
+              icon: Icons.home_outlined,
+              text: 'خانه',
+              onTap: '/',
+              isSelected: _selectedDrawerIndex == 0,
+              onTapCallback: () {
+                setState(() {
+                  _selectedDrawerIndex = 0;
+                });
+              },
+            ),
+            NewListTileWidget(
+              icon: Icons.info_outline,
+              text: 'درباره',
+              onTap: '/about',
+              isSelected: _selectedDrawerIndex == 2,
+              onTapCallback: () {
+                setState(() {
+                  _selectedDrawerIndex = 2;
+                });
+              },
+            ),
+            NewListTileWidget(
+              icon: Icons.favorite_border,
+              text: 'موارد دلخواه',
+              onTap: '/favorite',
+              isSelected: _selectedDrawerIndex == 3,
+              onTapCallback: () {
+                setState(() {
+                  _selectedDrawerIndex = 3;
+                });
+              },
+            ),
+            const Divider(color: Colors.grey, height: 40),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: SwitchListTile(
                 value: Theme.of(context).brightness == Brightness.dark,
                 onChanged: (bool value) {
                   widget.toggleTheme();
@@ -148,14 +154,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 activeColor: Colors.deepOrange,
                 title: Text('حالت شب', style: kDrawerItemsStyle),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
-          // Search Bar
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 18),
             child: Container(
@@ -181,19 +186,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   hintStyle: TextStyle(color: Colors.grey[600]),
                   prefixIcon: Icon(Icons.search, color: Colors.grey[700]),
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 15),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 14, horizontal: 15),
                 ),
               ),
             ),
           ),
-
-          // Grid view
           Expanded(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
               child: GridView.builder(
-                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 25,
                   mainAxisSpacing: 20,
@@ -206,28 +211,27 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-
-          // Bottom Navigation Bar
           Container(
             decoration: BoxDecoration(
-              color: Color(0xFFEF2B39),
+              color: const Color(0xFFEF2B39),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.1),
                   blurRadius: 10,
-                  offset: Offset(0, -1),
+                  offset: const Offset(0, -1),
                 )
               ],
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(20)),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             child: GNav(
               gap: 8,
-              backgroundColor: Color(0xFFEF2B39),
-              color: Colors.grey[600],
-              activeColor: Colors.deepOrange,
+              backgroundColor: const Color(0xFFEF2B39),
+              color: const Color(0xFFFFFFFF),
+              activeColor: const Color(0xFFFFFFFF),
               tabBackgroundColor: Colors.deepOrange.withOpacity(0.1),
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               selectedIndex: _selectedCategory,
               onTabChange: (index) {
                 setState(() {
@@ -235,7 +239,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   _updateFilteredFoodItems();
                 });
               },
-              tabs: List.generate(longClassChild.foodCategories.length, (index) {
+              tabs:
+                  List.generate(longClassChild.foodCategories.length, (index) {
                 final categoryName = longClassChild.foodCategories[index];
                 final categoryIcons = [
                   Icons.icecream,
@@ -247,7 +252,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: categoryIcons[index % categoryIcons.length],
                   text: categoryName,
                   iconColor: Colors.white,
-                  textStyle: TextStyle(fontWeight: FontWeight.w600),
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
                 );
               }),
             ),
