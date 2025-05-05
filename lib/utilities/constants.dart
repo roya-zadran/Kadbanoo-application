@@ -6,7 +6,7 @@ const kContainerTextColor = Colors.black;
 
 const kFoodCardNamesStyle = TextStyle(
     fontWeight: FontWeight.w800,
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: 'fonts/Karla fonts/Karla-SemiBoldItalic.ttf');
 
 const kRattingStyle = TextStyle(

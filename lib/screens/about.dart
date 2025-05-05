@@ -16,8 +16,8 @@ class AboutScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 20),
             CircleAvatar(
-              radius: 60,
-              backgroundImage: AssetImage('assets/icon.png'), // Add your app logo here
+              radius: 65,
+              backgroundImage: AssetImage('assets/icon.png'),
             ),
             const SizedBox(height: 20),
             const Text(
