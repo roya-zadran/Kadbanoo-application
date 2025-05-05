@@ -30,4 +30,4 @@ Technologies Used
 Contributors
 
 
-👩‍💻 Developed by Farzana Jafary & Roya Zadran 
+👩‍💻 Developed by Roya Zadran 
