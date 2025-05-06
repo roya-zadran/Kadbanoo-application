@@ -48,23 +48,24 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kBackgroundColor,
         title: Align(
           alignment: Alignment.centerRight,
           child: SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
-              children: const [
+              children: [
                 SizedBox(height: 10),
                 Text(
                   'کد بانو',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
                   ),
                 ),
-                SizedBox(height: 12),
+                SizedBox(height: 5),
               ],
             ),
           ),
@@ -74,8 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
         width: 310,
         backgroundColor: const Color(0xFFEF2B39),
         child: ListView(
-          padding:
-              const EdgeInsets.only(top: 60, left: 12, right: 12, bottom: 10),
+          padding: const EdgeInsets.only(top: 60, left: 12, right: 12, bottom: 10),
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 15),
+                SizedBox(height: 15),
                 Text(
                   'کد بانو',
                   style: TextStyle(
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            const Divider(color: Colors.grey, height: 40),
+            Divider(color: Colors.grey, height: 40),
             NewListTileWidget(
               icon: Icons.home_outlined,
               text: 'خانه',
@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
               },
             ),
-            const Divider(color: Colors.grey, height: 40),
+            Divider(color: Colors.grey, height: 40),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: SwitchListTile(
@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 18),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 18),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -187,17 +187,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   prefixIcon: Icon(Icons.search, color: Colors.grey[700]),
                   border: InputBorder.none,
                   contentPadding:
-                      const EdgeInsets.symmetric(vertical: 14, horizontal: 15),
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                 ),
               ),
             ),
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
+              padding: const EdgeInsets.fromLTRB(20, 2, 20, 0),
               child: GridView.builder(
                 keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
+                ScrollViewKeyboardDismissBehavior.onDrag,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 25,
@@ -222,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               ],
               borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(20)),
+              const BorderRadius.vertical(top: Radius.circular(20)),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             child: GNav(
@@ -240,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
               },
               tabs:
-                  List.generate(longClassChild.foodCategories.length, (index) {
+              List.generate(longClassChild.foodCategories.length, (index) {
                 final categoryName = longClassChild.foodCategories[index];
                 final categoryIcons = [
                   Icons.icecream,

@@ -6,7 +6,9 @@ import 'dart:io';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
+
   factory DatabaseHelper() => _instance;
+
   DatabaseHelper._internal();
 
   static Database? _db;
@@ -59,53 +61,178 @@ class DatabaseHelper {
   Future<void> insertSampleData() async {
     final db = await database;
 
-    int catId = await db.insert('food_categories', {'name': 'شیرینی ها'});
+    // Step 1: Insert categories
+    final categories = ['شیرینی ها', 'همه', 'غذا های سنتی'];
+    final Map<String, int> categoryIds = {};
 
-    int foodId = await db.insert('food_items', {
-      'name': 'شیر پیره',
-      'image': 'assets/sweets_images/Shirpara.jpeg',
-      'rating': 4.6,
-      'description':'',
-      'recipe': 'شیر را در قابلمه بریزید...',
-      'category_id': catId,
-    });
-
-    await db.insert('ingredients', {
-      'food_id': foodId,
-      'name': 'شیر: ۴ پیمانه',
-      'image_path': 'assets/ingredients_images/shir.jpg',
-    });
-
-    await db.insert('ingredients', {
-      'food_id': foodId,
-      'name': 'آرد برنج: ۱/۴ پیمانه',
-      'image_path': 'assets/ingredients_images/Ard_birinj.webp',
-    });
-  }
-
-  // Get all food items along with their ingredients
-  Future<List<FoodItem>> getAllFoodItems() async {
-    final db = await database;
-    List<Map<String, dynamic>> foodItems = await db.query('food_items');
-    List<FoodItem> foodList = [];
-
-    for (var food in foodItems) {
-      // Get ingredients for the food item
-      List<Map<String, dynamic>> ingredientRows = await db.query('ingredients', where: 'food_id = ?', whereArgs: [food['id']]);
-      List<Ingredient> ingredients = ingredientRows.map((e) => Ingredient(
-        name: e['name'],
-        imagePath: e['image_path'],
-      )).toList();
-
-      foodList.add(FoodItem(
-        name: food['name'],
-        image: food['image'],
-        rating: food['rating'],
-        description: food['description'],
-        recipe: food['recipe'],
-        ingredients: ingredients,
-      ));
+    for (final category in categories) {
+      final id = await db.insert('food_categories', {'name': category});
+      categoryIds[category] = id;
     }
-    return foodList;
+
+
+    final List<Map<String, dynamic>> foods = [
+      {
+        'category': 'شیرینی ها',
+        'name': 'شیر پیره',
+        'image': 'assets/sweets_images/Shirpara.jpeg',
+        'rating': 4.6,
+        'description':
+        'شیرپیره یک دسر سنتی و خوشمزه است که از ترکیب شیر و آرد برنج یا آرد معمولی تهیه می‌شود...',
+        'recipe':
+        'شیر را در یک قابلمه بزرگ بریزید و بر روی حرارت متوسط قرار دهید...',
+        'ingredients': [
+          {
+            'name': 'شیر: ۴ پیمانه',
+            'image': 'assets/ingredients_images/shir.jpg'
+          },
+          {
+            'name': 'آرد برنج: ۱/۴ پیمانه',
+            'image': 'assets/ingredients_images/Ard_birinj.webp'
+          },
+          {
+            'name': 'شکر: ۱/۲ پیمانه',
+            'image': 'assets/ingredients_images/Sugar.jpeg'
+          },
+          {
+            'name': 'گلاب: ۲ قاشق غذاخوری',
+            'image': 'assets/ingredients_images/gulab.jpg'
+          },
+          {
+            'name': 'کره: ۲ قاشق غذاخوری',
+            'image': 'assets/ingredients_images/kara.jpg'
+          },
+          {
+            'name': 'پودر هل: ۱/۲ قاشق چای‌خوری',
+            'image': 'assets/ingredients_images/pudar_hil.jpg'
+          },
+          {
+            'name': 'پسته یا بادام: به میزان لازم',
+            'image': 'assets/ingredients_images/pudar_pista.webp'
+          },
+        ]
+      },
+      {
+        'category': 'غذا های سنتی',
+        'name': 'قابلی پلو',
+        'image': 'assets/traditional_images/qabli_palav.jpg',
+        'rating': 4.7,
+        'description':
+        'قابلی پلو یکی از معروف‌ترین غذاهای افغانستان است...',
+        'recipe':
+        'گوشت را با پیاز، ادویه و آب بپزید تا نرم شود...',
+        'ingredients': [
+          {
+            'name': 'برنج: ۳ پیمانه',
+            'image': 'assets/ingredients_images/rice.webp'
+          },
+          {
+            'name': 'گوشت بره یا گاو: ۵۰۰ گرم',
+            'image': 'assets/ingredients_images/Ghusht_gaw_bara.jpeg'
+          },
+          {
+            'name': 'پیاز: ۲ عدد',
+            'image': 'assets/ingredients_images/Onion.jpg'
+          },
+          {
+            'name': 'هویج: ۲ عدد',
+            'image': 'assets/ingredients_images/Carrot.jpeg'
+          },
+          {
+            'name': 'کشمش: ½ پیمانه',
+            'image': 'assets/ingredients_images/Kishmish.jpeg'
+          },
+          {
+            'name': 'خلال بادام: ¼ پیمانه',
+            'image': 'assets/ingredients_images/badam_khurdshuda.webp'
+          },
+          {
+            'name': 'هل: به مقدار لازم',
+            'image': 'assets/ingredients_images/pudar_hil.jpg'
+          },
+          {
+            'name': 'دارچین: به مقدار لازم',
+            'image': 'assets/ingredients_images/pudar_darchin.jpg'
+          },
+          {
+            'name': 'زیره: به مقدار لازم',
+            'image': 'assets/ingredients_images/Zira.jpeg'
+          },
+          {
+            'name': 'نمک و فلفل: به مقدار لازم',
+            'image': 'assets/ingredients_images/namak_fulfil.jpeg'
+          },
+        ]
+      },
+      {
+        'category': 'شیرینی ها',
+        'name': 'شیرینی خرما',
+        'image': 'assets/sweets_images/Shirini_Khurma.jpeg',
+        'rating': 4.6,
+        'description':
+        'شیرینی خرما یک دسر خوشمزه و مقوی است که از خرما، آجیل و برخی ادویه‌جات تهیه می‌شود...',
+        'recipe':
+        'خرماها را خوب بشویید و هسته‌های آن‌ها را جدا کنید...',
+        'ingredients': [
+          {
+            'name': 'خرما (بدون هسته): ۲۰۰ گرم',
+            'image': 'assets/ingredients_images/khurma.jpg'
+          },
+          {
+            'name': 'گردو یا پسته: ۱/۴ پیمانه',
+            'image': 'assets/ingredients_images/gardu.jpg'
+          },
+          {
+            'name': 'آرد: ۱/۲ پیمانه',
+            'image': 'assets/ingredients_images/Ard.jpg'
+          },
+          {
+            'name': 'کره: ۱/۴ پیمانه',
+            'image': 'assets/ingredients_images/kara.jpg'
+          },
+          {
+            'name': 'پودر دارچین: ۱/۲ قاشق چای‌خوری',
+            'image': 'assets/ingredients_images/pudar_darchin.jpg'
+          },
+          {
+            'name': 'گلاب: ۱ قاشق غذاخوری',
+            'image': 'assets/ingredients_images/gulab.jpg'
+          },
+          {
+            'name': 'شکر: ۲ قاشق غذاخوری',
+            'image': 'assets/ingredients_images/Sugar.jpeg'
+          },
+          {
+            'name': 'پودر نارگیل: ۱/۴ پیمانه',
+            'image': 'assets/ingredients_images/pudar _nargil.jpg'
+          },
+          {
+            'name': 'پودر کاکائو: ۱ قاشق غذاخوری',
+            'image': 'assets/ingredients_images/pudar_kakav.jpg'
+          },
+        ]
+      },
+    ];
+
+    // Step 3: Insert each food item and its ingredients
+    for (final food in foods) {
+      final catId = categoryIds[food['category']]!;
+      final foodId = await db.insert('food_items', {
+        'name': food['name'],
+        'image': food['image'],
+        'rating': food['rating'],
+        'description': food['description'],
+        'recipe': food['recipe'],
+        'category_id': catId,
+      });
+
+      for (final ingredient in food['ingredients']) {
+        await db.insert('ingredients', {
+          'food_id': foodId,
+          'name': ingredient['name'],
+          'image_path': ingredient['image'],
+        });
+      }
+    }
   }
 }

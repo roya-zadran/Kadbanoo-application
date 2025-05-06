@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kadbanoo/utilities/favorite_manager.dart';
 import 'package:kadbanoo/createdWidgets/foodItemClass.dart';
 import 'package:kadbanoo/screens/foodDetailedScreen.dart';
-import 'package:kadbanoo/utilities/constants.dart';
 
 class FoodCard extends StatefulWidget {
   final FoodItem foodItem;
@@ -17,8 +16,9 @@ class _FoodCardState extends State<FoodCard> {
   @override
   Widget build(BuildContext context) {
     bool isFavorite = FavoriteManager.isFavorite(widget.foodItem);
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    return  GestureDetector(
+    return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
@@ -29,7 +29,7 @@ class _FoodCardState extends State<FoodCard> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: kBackgroundColor,
+          color: isDarkMode ? Colors.grey[900] : Colors.white,// Card background
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -62,7 +62,10 @@ class _FoodCardState extends State<FoodCard> {
                   children: [
                     Text(
                       widget.foodItem.name,
-                      style: kFoodCardNamesStyle,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                     Row(
@@ -71,19 +74,28 @@ class _FoodCardState extends State<FoodCard> {
                         Row(
                           children: [
                             Icon(Icons.star, color: Colors.amber, size: 16),
+                            SizedBox(width: 4),
                             Text(
-                              widget.foodItem.rating.toString(),
-                              style: kRattingStyle,
+                              widget.foodItem.averageRating.toString(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.color,
+                              ),
                             ),
                           ],
                         ),
                         Icon(
-                          FavoriteManager.isFavorite(widget.foodItem)
+                          isFavorite
                               ? Icons.favorite
                               : Icons.favorite_border,
-                          color: FavoriteManager.isFavorite(widget.foodItem)
+                          color: isFavorite
                               ? Colors.red
-                              : Colors.black,
+                              : Theme.of(context).iconTheme.color,
                         ),
                       ],
                     ),
@@ -96,6 +108,5 @@ class _FoodCardState extends State<FoodCard> {
         ),
       ),
     );
-
   }
 }

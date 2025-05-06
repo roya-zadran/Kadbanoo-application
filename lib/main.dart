@@ -4,9 +4,10 @@ import 'package:kadbanoo/screens/about.dart';
 import 'package:kadbanoo/screens/homeScreen.dart';
 import 'package:kadbanoo/screens/favoritescreen.dart';
 import 'package:kadbanoo/utilities/favorite_manager.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DatabaseHelper   ().insertSampleData();
+  await DatabaseHelper().insertSampleData();
   await FavoriteManager.loadFavorites();
   runApp(KadbanooApp());
 }

@@ -42,7 +42,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              // Image Section with Border Radius
+              // Image Section
               ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.asset(
@@ -54,7 +54,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               ),
               const SizedBox(height: 20),
 
-              // Food Name and Favorite Icon
+              // Name & Favorite Icon
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -91,25 +91,24 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 10),
 
-              // Rating Section
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   const Icon(Icons.star, color: Colors.amber, size: 20),
                   const SizedBox(width: 4),
                   Text(
-                    widget.foodItem.rating.toString(),
+                    widget.foodItem.averageRating.toString(),
                     style: kRattingStyle.copyWith(fontSize: 16),
                   ),
+                  const SizedBox(width: 20),
                 ],
               ),
-
               const SizedBox(height: 25),
 
-              // Description Section
+              // Description
               Text(
                 widget.foodItem.description,
                 textDirection: TextDirection.rtl,
@@ -120,10 +119,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   color: isDarkMode ? Colors.white : Colors.black87,
                 ),
               ),
-
               const SizedBox(height: 30),
 
-              // Ingredients Title Section
+              // Ingredients Title
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -145,10 +143,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 height: 130,
                 child: _buildIngredientList(widget.foodItem.ingredients),
               ),
-
               const SizedBox(height: 40),
 
-              // Recipe Title Section
+              // Recipe Title
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -165,16 +162,27 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               ),
               const SizedBox(height: 15),
 
-              // Recipe Instructions
-              Text(
-                widget.foodItem.recipe,
-                textDirection: TextDirection.rtl,
-                textAlign: TextAlign.justify,
-                style: kContentStyle.copyWith(
-                  height: 1.8,
-                  fontSize: 16,
-                  color: isDarkMode ? Colors.white : Colors.black87,
-                ),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: widget.foodItem.recipe
+                    .split('\n')
+                    .map(
+                      (step) => Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Text(
+                      step.trim(),
+                      textDirection: TextDirection.rtl,
+                      textAlign: TextAlign.justify,
+                      style: kContentStyle.copyWith(
+                        height: 1.9,
+                        fontSize: 16,
+                        color: isDarkMode ? Colors.white : Colors.black87,
+                      ),
+                    ),
+                  ),
+                )
+                    .toList(),
               ),
             ],
           ),
@@ -196,8 +204,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             margin: const EdgeInsets.symmetric(vertical: 4),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              gradient: LinearGradient(
-                colors: [ Colors.deepOrange,Color(0xFFFF2802)], // Soft Blue Gradient
+              gradient: const LinearGradient(
+                colors: [Colors.deepOrange, Color(0xFFFF2802)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),

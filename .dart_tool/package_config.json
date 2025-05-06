@@ -200,6 +200,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "flutter_rating_bar",
+      "rootUri": "file:///C:/Users/Dell.com/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_rating_bar-4.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///C:/Users/Dell.com/AppData/Local/Flutter%20SDK/packages/flutter_test",
       "packageUri": "lib/",
@@ -698,7 +704,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-04-29T22:48:42.066042Z",
+  "generated": "2025-05-05T19:36:58.481316Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///C:/Users/Dell.com/AppData/Local/Flutter%20SDK",
